@@ -8,7 +8,7 @@ import {
   formatDateToString,
   handleStartDateChange,
 } from "./utils/dateFunctions";
-import { getDataForWeeklySchedule } from "./utils/filterFunctions";
+import { filterShiftDataForUser, filterShiftDataForReleasedShifts } from "./utils/filterFunctions";
 
 //TODO: delete this after testing
 import fakeData from "./assets/shiftDataExample.json";
@@ -32,19 +32,25 @@ const App = () => {
       shiftsForUserId,
       releasedShifts,
     }),
-    [shiftData, startDate]
+    [shiftData]
   );
 
   useEffect(() => {
-    // Call getShiftAssignments API to retrieve shift data
+    setIsLoading(true); // set loading to true when useEffect runs
+  
     getShiftAssignments(
       startDate,
       endDate,
       setShiftData,
-      setIsLoading,
+      () => setIsLoading(false), // set loading to false when fetch completes successfully
       setError
-    );
+    ).then(() => {
+      console.log("shiftData: " + shiftData.length);
+      setShiftsForUserId(filterShiftDataForUser(shiftData, userId));
+      setReleasedShifts(filterShiftDataForReleasedShifts(shiftData));
+    });
   }, []);
+  
 
   // Render the ErrorScreen component if an error occurs during API call
   if (error) {
@@ -63,7 +69,6 @@ const App = () => {
         ) : (
           <WeeklySchedule
             {...weeklyScheduleProps}
-            onStartDateChange={handleStartDateChange}
           />
         )}
       </View>
