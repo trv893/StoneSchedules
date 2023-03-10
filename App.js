@@ -3,15 +3,15 @@ import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import WeeklySchedule from "./components/userWeeklySchedule/WeeklySchedule";
 import { getShiftAssignments } from "./api/getShiftAssignments";
 import ErrorScreen from "./components/ErrorScreen";
-import * as RNLocalize from "react-native-localize";
-import { fetchShiftAssignments } from "./api/getShiftAssignments";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const App = () => {
   const [shiftData, setShiftData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState();
   const [error, setError] = useState(null);
-  // Use useMemo to memoize shiftData and startDate props
+
   const weeklyScheduleProps = useMemo(
     () => ({
       shiftData,
@@ -22,9 +22,13 @@ const App = () => {
   );
 
   useEffect(() => {
-    fetchShiftAssignments();
-    const userLocale = RNLocalize.getLocales()[0].languageCode;
-    console.log(userLocale);
+    getShiftAssignments(
+      startDate,
+      endDate,
+      setShiftData,
+      setIsLoading,
+      setError
+    );
   }, [startDate]);
 
   const handleStartDateChange = (newStartDate) => {
@@ -34,30 +38,27 @@ const App = () => {
   if (error) {
     return <ErrorScreen message={error} onRetry={() => fetchData()} />;
   }
-  const { languageCode } = RNLocalize.getLocales()[0];
-  const localizedStrings =
-    languageCode === "es"
-      ? require("./localization/es.json")
-      : require("./localization/en.json");
 
   return (
-    <View style={styles.Container}>
-      {isLoading ? (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#1e90ff" />
-          <Text style={styles.loadingText}>{localizedStrings.loading}</Text>
-        </View>
-      ) : (
-        <WeeklySchedule {...weeklyScheduleProps} />
-      )}
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        {isLoading ? (
+          <View style={styles.loader}>
+            <ActivityIndicator size="large" color="#1e90ff" />
+            <Text style={styles.loadingText}>Loading...</Text>
+          </View>
+        ) : (
+          <WeeklySchedule {...weeklyScheduleProps} />
+        )}
+      </View>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  Container: {
+  container: {
     flex: 1,
-    top: 60,
+    backgroundColor: "white",
   },
   loader: {
     flex: 1,

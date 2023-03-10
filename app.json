@@ -14,6 +14,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "locales": {
+      "en": "./localization/en.json",
+      "es": "./localization/es.json"
+    },
+    "defaultLocale": "en",
     "ios": {
       "supportsTablet": true
     },
