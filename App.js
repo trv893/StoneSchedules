@@ -4,10 +4,6 @@ import WeeklySchedule from "./components/userWeeklySchedule/WeeklySchedule";
 import { getShiftAssignments } from "./api/getShiftAssignments";
 import ErrorScreen from "./components/ErrorScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import {
-  formatDateToString,
-  handleStartDateChange,
-} from "./utils/dateFunctions";
 import { filterShiftDataForUser, filterShiftDataForReleasedShifts } from "./utils/filterFunctions";
 
 //TODO: delete this after testing
@@ -20,8 +16,8 @@ const App = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState();
   const [error, setError] = useState(null);
-
-  const [userId, setUserId] = useState(5);
+  const userId = 5;
+  //const [userId, setUserId] = useState(5);
   const [shiftsForUserId, setShiftsForUserId] = useState(null);
   const [releasedShifts, setReleasedShifts] = useState([]);
 
@@ -32,7 +28,7 @@ const App = () => {
       shiftsForUserId,
       releasedShifts,
     }),
-    [shiftData]
+    [shiftsForUserId, releasedShifts]
   );
 
   useEffect(() => {
@@ -42,14 +38,23 @@ const App = () => {
       startDate,
       endDate,
       setShiftData,
-      () => setIsLoading(false), // set loading to false when fetch completes successfully
+      setIsLoading,
       setError
-    ).then(() => {
-      console.log("shiftData: " + shiftData.length);
-      setShiftsForUserId(filterShiftDataForUser(shiftData, userId));
-      setReleasedShifts(filterShiftDataForReleasedShifts(shiftData));
-    });
+    );
+  
   }, []);
+  
+  // Call setShiftsForUserId and setReleasedShifts after setShiftData
+  useEffect(() => {
+    var filteredShiftsForUserId = filterShiftDataForUser(shiftData, userId);
+    var filteredReleasedShifts = filterShiftDataForReleasedShifts(fakeData);
+    setShiftsForUserId(filteredShiftsForUserId);
+    setReleasedShifts(filteredReleasedShifts);
+    console.log("shift data from useEffect: " + filteredShiftsForUserId)
+    console.log("released shifts from useEffect: " + filteredReleasedShifts)
+  }, [shiftData]);
+  
+  
   
 
   // Render the ErrorScreen component if an error occurs during API call

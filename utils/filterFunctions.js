@@ -1,6 +1,3 @@
-//TODO: delete this after testing
-import fakeData from "../assets/shiftDataExample.json";
-
 /**
  * Creates an array of ISO date strings for 7 days starting from the given start date.
  *
