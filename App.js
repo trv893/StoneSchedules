@@ -23,6 +23,8 @@ const App = () => {
 
   useEffect(() => {
     fetchShiftAssignments();
+    const userLocale = RNLocalize.getLocales()[0].languageCode;
+    console.log(userLocale);
   }, [startDate]);
 
   const handleStartDateChange = (newStartDate) => {
@@ -32,8 +34,6 @@ const App = () => {
   if (error) {
     return <ErrorScreen message={error} onRetry={() => fetchData()} />;
   }
-
-  const userLocale = RNLocalize.getLocales()[0].languageCode;
   const { languageCode } = RNLocalize.getLocales()[0];
   const localizedStrings =
     languageCode === "es"
