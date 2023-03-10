@@ -4,6 +4,13 @@ import WeeklySchedule from "./components/userWeeklySchedule/WeeklySchedule";
 import { getShiftAssignments } from "./api/getShiftAssignments";
 import ErrorScreen from "./components/ErrorScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import {
+  findShiftForDayAndUser,
+  findAllReleasedShiftsForDay,
+} from "./utils/filter";
+
+//TODO: delete this after testing
+import fakeData from "./assets/shiftDataExample.json";
 
 const App = () => {
   const [shiftData, setShiftData] = useState([]);
@@ -12,11 +19,16 @@ const App = () => {
   const [endDate, setEndDate] = useState();
   const [error, setError] = useState(null);
 
+  const [matchingShift, setMatchingShift] = useState(null);
+  const [releasedShifts, setReleasedShifts] = useState([]);
+
   const weeklyScheduleProps = useMemo(
     () => ({
       shiftData,
       startDate,
-      onStartDateChange: handleStartDateChange,
+      setStartDate,
+      matchingShift,
+      releasedShifts,
     }),
     [shiftData, startDate]
   );
@@ -29,11 +41,13 @@ const App = () => {
       setIsLoading,
       setError
     );
+    // Call filter functions on shiftData and store the results in state variables
+    const matchingShift = findShiftForDayAndUser(date, userId, shiftName, shiftData);
+    //TODO: change fakeData to shiftData after testing
+    const releasedShifts = findAllReleasedShiftsForDay(date, shiftName, fakeData);
+    setMatchingShift(matchingShift);
+    setReleasedShifts(releasedShifts);
   }, [startDate]);
-
-  const handleStartDateChange = (newStartDate) => {
-    setStartDate(newStartDate);
-  };
 
   if (error) {
     return <ErrorScreen message={error} onRetry={() => fetchData()} />;
