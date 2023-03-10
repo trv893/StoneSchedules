@@ -1,0 +1,8 @@
+{
+    "title": "Shift Assignments",
+    "nextWeek": "Next week",
+    "prevWeek": "Previous week",
+    "loading": "Loading shift assignments...",
+    "error": "Failed to fetch shift assignments. Please try again later."
+  }
+  

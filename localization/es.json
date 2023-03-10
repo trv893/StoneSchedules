@@ -1,0 +1,8 @@
+{
+    "title": "Asignaciones de turno",
+    "nextWeek": "Próxima semana",
+    "prevWeek": "Semana anterior",
+    "loading": "Cargando asignaciones de turno...",
+    "error": "No se pudieron obtener las asignaciones de turno. Por favor, inténtelo de nuevo más tarde."
+  }
+  
