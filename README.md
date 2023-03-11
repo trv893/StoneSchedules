@@ -1,6 +1,6 @@
 # StoneSchedules
 
-StoneSchedules is a mobile application built using React Native Expo that facilitates the management of employee schedules for a restaurant. The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees. 
+StoneSchedules is a mobile application built using React Native Expo that facilitates the management of employee schedules for a restaurant. The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees.
 
 ## Features
 
@@ -21,13 +21,44 @@ StoneSchedules is a mobile application built using React Native Expo that facili
 
 1. Clone the repository: `git clone https://github.com/trv893/StoneSchedules.git`
 2. Install dependencies: `npm install`
-3. Start the application: `npm start`
+3. Create a `.env` file with the following variables:
+
+    ```
+    DB_HOST=<database-host>
+    DB_USER=<database-username>
+    DB_PASSWORD=<database-password>
+    DB_NAME=<database-name>
+    ```
+
+4. Start the application by running `npm start`.
 
 Note: The backend of the project is not located in this repository. The backend is written in C#. Example data being returned from the database can be found in ./assets/shiftDataExample.json.
 
 ## Usage
 
-The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees. 
+StoneSchedules allows employees to:
+
+- View their assigned shifts, including the date, time, and section.
+- Release shifts they don't want to work, making them available for other employees to pick up.
+- Request to pick up shifts from other employees, either by sending a pickup request or by picking up a released shift.
+
+To release a shift:
+
+1. Click on the shift you want to release.
+2. Click the "Release Shift" button.
+3. Confirm that you want to release the shift.
+
+To pick up a released shift:
+
+1. Click on the released shift you want to pick up.
+2. Click the "Pick Up Shift" button.
+3. Confirm that you want to pick up the shift.
+
+To request to pick up a shift:
+
+1. Click on the employee whose shift you want to pick up.
+2. Click the "Request to Pick Up Shift" button.
+3. Wait for the owner of the shift to accept or deny your request.
 
 ### Schedule View
 
@@ -51,7 +82,13 @@ The application allows employees to view their schedules, release shifts for pic
 
 ## Contributing
 
-This project is open for contributions. If you have any questions or suggestions, please create an issue or submit a pull request.
+We welcome contributions to StoneSchedules! To contribute, please follow these steps:
+
+1. Fork this repository to your own GitHub account.
+2. Create a new branch with your changes: `git checkout -b my-new-feature`.
+3. Commit your changes: `git commit -am 'Add some feature'`.
+4. Push to the branch: `git push origin my-new-feature`.
+5. Submit a pull request.
 
 ## License
 
