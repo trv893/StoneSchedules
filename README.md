@@ -1,54 +1,58 @@
 # StoneSchedules
 
-StoneSchedules is a React Native Expo application designed to help restaurant employees manage and view their schedules. With StoneSchedules, users can view their schedules for a given week, release shifts they cannot work, and request to pick up shifts that other employees have released or to pick up a specific shift from another employee.
+StoneSchedules is a mobile application built using React Native Expo that facilitates the management of employee schedules for a restaurant. The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees. 
 
-Table of Contents
-[Installation](#installation)
-[Usage](#usage)
-[Features](#features)
-[Contributing](#contributing)
-[License](#license)
-Installation
-To run StoneSchedules locally, you will need to have Node.js installed on your machine. Once Node.js is installed, clone the repository to your machine. Then navigate to the project's root directory and run `npm install` to install all necessary dependencies.
+## Features
 
-Usage
-To launch StoneSchedules, navigate to the project's root directory and run `npm start`. This will launch the Expo Developer Tools in your browser. You can then run the app on your local device using the Expo Client app or on an emulator.
+- View weekly schedules in week increments from the current day
+- Release shifts for pickup by other employees
+- Pick up released shifts
+- Request specific shifts from other employees
+- Auth0 integration for signup and Gmail integration
+- Schedule upload feature to upload schedules into the database
+- Generation of the schedule for managers taking into account certain criteria including availability and preference and allowing the manager to make final edits before publishing the schedule
+- Google calendar integration for a user’s schedule which automatically loads events into their google calendar about their schedule
+- Notifications
+- Language options
+- Approval process for managers to accept or deny shift transfers
+- Highlighted shifts feature which allows managers to designate shifts that must be picked up before any shift transfers are approved
 
-Once the app is running, users can view their schedules for a given week using the week selector component. Users can then release shifts they cannot work by tapping on the shift they want to release and selecting "Release Shift". Other employees can then request to pick up released shifts or to pick up a specific shift from another employee.
+## Installation
 
-Features
-View schedules for a given week
-The main feature of StoneSchedules is the ability for users to view their schedules for a given week. The week selector component allows users to select the week they want to view, and the weekly schedule component displays their shifts for that week.
+1. Clone the repository: `git clone https://github.com/trv893/StoneSchedules.git`
+2. Install dependencies: `npm install`
+3. Start the application: `npm start`
 
-Release shifts that cannot be worked
-If a user is unable to work a shift, they can release the shift for other employees to pick up. To release a shift, the user can tap on the shift they want to release and select "Release Shift".
+Note: The backend of the project is not located in this repository. The backend is written in C#. Example data being returned from the database can be found in ./assets/shiftDataExample.json.
 
-Request to pick up released shifts or specific shifts from other employees
-If a shift has been released, other employees can request to pick up the shift. To request a shift, the user can tap on the released shift and select "Request Shift". Users can also request to pick up a specific shift from another employee. To do so, the user can use the request a pick up component to send a pick up request to the employee who is scheduled for the shift.
+## Usage
 
-Auth0 integration for signup and Gmail integration (not yet implemented)
-In the future, StoneSchedules will integrate with Auth0 for signup and Gmail for email notifications.
+The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees. 
 
-Schedule upload feature to upload schedules into the database (not yet implemented)
-In the future, StoneSchedules will include a schedule upload feature that allows managers to upload schedules into the database.
+### Schedule View
 
-Generation of the schedule for the managers which will take into account certain criteria including availability and preference and allow the manager to make final edits before publishing the schedule (not yet implemented)
-In the future, StoneSchedules will include a feature for managers to generate the schedule based on employee availability and preference. The manager will be able to make final edits before publishing the schedule.
+- The home screen displays the current month and year.
+- A week selector component allows users to select the weeks displayed in the weekly schedule component.
+- The weekly schedule component displays details about the user's schedule for the week selected by the week selector.
 
-Google calendar integration for a user’s schedule which automatically loads events into their Google calendar about their schedule (not yet implemented)
-In the future, StoneSchedules will integrate with Google calendar to automatically load a user's schedule into their Google calendar.
+### Shift Release
 
-Notifications (not yet implemented)
-In the future, StoneSchedules will include a notification feature to alert users about their shifts and shift requests.
+- Employees can release shifts they are assigned and do not want to work. This action tells other employees that the shift is available for "pick up".
+- An employee retains the released shift until another employee picks up that shift.
 
-Language options (not yet implemented)
-In the future, StoneSchedules will include language options to support users who speak languages other than English.
-Contributing
-We welcome contributions from the community. To contribute to StoneSchedules, follow these steps:
+### Shift Pick Up
 
-Fork the repository and clone it to your machine.
-Create a new branch for your feature or bug fix.
-Make your changes and test them thoroughly.
-Submit a pull request.
-License
-StoneSchedules is licensed under the MIT License. Feel free to use, modify, and distribute the code as you see fit. We only ask that you give credit to the original authors.
+- Employees can pick up released shifts.
+
+### Shift Request
+
+- Employees can request to pick up a specific shift from another employee, regardless of whether that shift has been released or not.
+- The request a pick up component will render a list of all employees working on that date at that shift time and what section each is scheduled for and a TouchableOpacity that will send a pick-up request to that user.
+
+## Contributing
+
+This project is open for contributions. If you have any questions or suggestions, please create an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details.
