@@ -1,5 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
   const today = new Date(); // Create a new Date object for today's date
@@ -17,7 +18,14 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPressPrevious}>
-        <Text style={styles.buttonText}>{"<"}</Text>
+        <LinearGradient
+          colors={["#E60707", "#DE0202", "#D40404", "#CB0202", "#C10303", "#B80000"]}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.gradient}
+        >
+          <Text style={styles.buttonText}>{"<"}</Text>
+        </LinearGradient>
       </TouchableOpacity>
       <View style={styles.weekContainer}>
         {formattedArrayOfDateObjs.map((formattedDate, index) => {
@@ -28,9 +36,9 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
               key={index}
               style={[
                 styles.dayContainer,
-                index === formattedArrayOfDateObjs.length - 1 ? { borderEndWidth: 1 } : { borderEndWidth: 1 },
-                index === 0 ? { borderStartWidth: 1 } : null,
-                isToday ? { backgroundColor: "lightblue" } : null, // Set background color to gray if the date is today's date
+                index === formattedArrayOfDateObjs.length - 1 ? { borderEndWidth: 1, borderTopRightRadius: 5, borderBottomRightRadius: 5 } : { borderEndWidth: 1 },
+                index === 0 ? { borderStartWidth: 1, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 } : null,
+                isToday ? { backgroundColor: "#E61919" } : null, // Set background color to gray if the date is today's date
               ]}
             >
               <Text style={styles.dayString}>{formattedDate.dayString}</Text>
@@ -40,7 +48,14 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
         })}
       </View>
       <TouchableOpacity style={styles.button} onPress={onPressNext}>
-        <Text style={styles.buttonText}>{">"}</Text>
+        <LinearGradient
+          colors={["#B80000", "#C10303", "#CB0202", "#D40404", "#DE0202", "#E60707"]}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.gradient}
+        >
+          <Text style={styles.buttonText}>{">"}</Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
@@ -48,13 +63,12 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 10,
+    marginHorizontal: "auto",
+    width: "90%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "gray",
-    overflow: "hidden", // To hide the extra border at the beginning
   },
   weekContainer: {
     flexDirection: "row",
@@ -62,30 +76,50 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   dayContainer: {
-    flex: 1, // To make the day containers expand to fill the available space
+    flex: 1,
     alignItems: "center",
-    borderColor: "gray",
+    borderColor: "#760606",
+    borderTopWidth: 1, // Add top border
+    borderBottomWidth: 1, // Add bottom border
     paddingHorizontal: 4,
-    paddingVertical: 8, // To make the day containers taller
+    paddingVertical: 8,
   },
+  
   dayString: {
     fontSize: 16,
     fontWeight: "bold",
   },
   dayNumber: {
     fontSize: 14,
+    fontWeight: "bold",
   },
   button: {
-    backgroundColor: 'gray',
-    padding: 10,
     borderRadius: 5,
-    margin: 5,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 3,
   },
+  gradient: {
+    width: 30,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  
   buttonText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 23,
+    fontWeight: 'bolder',
+    paddingBottom: 8,
   }
+  
 });
+
 
 export default WeekSelector;
