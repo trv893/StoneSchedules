@@ -30,29 +30,30 @@ export const handleStartDateChange = (newStartDate) => {
 };
 
 /**
- * Formats a date object into the format "day-of-week day-of-month-suffix"
+ * Accepts a date objects and returns an array of objects for a week of dates from the startDate.
+ * Each object has a dayString in the format 'Sat', a dayNumberString  with a formats day-of-month-suffix ('11th') and a date object of that date.
  * @param {Date} date The date object to format
  * @returns {Object} An object with the formatted day string and day number
  *
  * @example
  * const date = new Date('2022-03-14T00:00:00.000Z');
  * const formattedDate = formatDayOfWeekDate(date);
- * console.log(formattedDate); // Output: [{dayString: 'Fri', dayNumber: '10th'},
-{dayString: 'Sat', dayNumber: '11th'},
-{dayString: 'Sun', dayNumber: '12th'},
-{dayString: 'Mon', dayNumber: '13th'},
-{dayString: 'Tue', dayNumber: '14th'},
-{dayString: 'Wed', dayNumber: '15th'},
-{dayString: 'Thu', dayNumber: '16th'}]
+ * console.log(formattedDate); // Output: [{dayString: 'Fri', dayNumber: '10th', dateObj: [date object]},
+{dayString: 'Sat', dayNumberString: '11th', dateObj: [date object]},
+{dayString: 'Sun', dayNumberString: '12th', dateObj: [date object]},
+{dayString: 'Mon', dayNumberString: '13th', dateObj: [date object]},
+{dayString: 'Tue', dayNumberString: '14th', dateObj: [date object]},
+{dayString: 'Wed', dayNumberString: '15th', dateObj: [date object]},
+{dayString: 'Thu', dayNumberString: '16th', dateObj: [date object]}]
  */
-export const formatDayOfWeekDate = (startDate) => {
+export const weekOfDateObjectsArray = (startDate) => {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const formattedDates = [];
   for (let i = 0; i < 7; i++) {
     const date = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
     const dayString = daysOfWeek[date.getDay()];
-    const dayNumber = date.getDate() + getNumberSuffix(date.getDate());
-    formattedDates.push({ dayString, dayNumber });
+    const dayNumberString = date.getDate() + getNumberSuffix(date.getDate());
+    formattedDates.push({ dayString, dayNumberString, dateObj: date });
   }
   console.log("formatDayOfWeekDate", formattedDates)
   return formattedDates;
@@ -175,4 +176,25 @@ export const formattedDateArray = (dateArray) => {
     return { dayString, dayNumber };
   });
 }
+
+/**
+ * Returns a new Date object that is either 6 days earlier or 6 days later than the given Date object,
+ * depending on the specified direction.
+ * @param {string} direction The direction to move the date (either "prev" or "next")
+ * @param {Date} currentStartDate The current start date to move from
+ * @returns {Date} A new Date object that is 6 days earlier or later than the current start date, depending on the direction
+ */
+export const weekFromStartDate = (direction, currentStartDate) => {
+  // Create a new Date object based on the currentStartDate
+  const newDate = new Date(currentStartDate.getTime());
+  
+  // Determine whether to add or subtract 6 days based on the direction
+  const daysToAdd = (direction === 'next') ? 6 : -6;
+  
+  // Add or subtract the days from the new Date object
+  newDate.setDate(newDate.getDate() + daysToAdd);
+  
+  // Return the new Date object
+  return newDate;
+};
 

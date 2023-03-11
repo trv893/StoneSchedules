@@ -50,8 +50,8 @@ const App = () => {
     var filteredReleasedShifts = filterShiftDataForReleasedShifts(fakeData);
     setShiftsForUserId(filteredShiftsForUserId);
     setReleasedShifts(filteredReleasedShifts);
-    console.log("shift data from useEffect: " + filteredShiftsForUserId)
-    console.log("released shifts from useEffect: " + filteredReleasedShifts)
+    //console.log("shift data from useEffect: " + filteredShiftsForUserId)
+    //console.log("released shifts from useEffect: " + filteredReleasedShifts)
   }, [shiftData]);
   
   

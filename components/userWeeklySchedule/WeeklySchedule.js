@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet,  } from "react-native";
 import WeekSelector from "./WeekSelector";
-import { getAdjacentWeek, getWeekOfDateObjects, formattedDateArray, createFormattedDateArrayFromStartDate } from "../../utils/dateFunctions";
+import { weekOfDateObjectsArray, weekFromStartDate } from "../../utils/dateFunctions";
 import { findShiftsForUserForSevenDays } from "../../utils/filterFunctions";
 
 const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}) => {
-    const [weekOfDates, setWeekOfDates] = useState([
-      getWeekOfDateObjects(startDate),
-    ]);
-    const onWeekChange = (direction) => {
-      var newDateArray = getAdjacentWeek(direction);
-      var formattedWeekDateArray = formattedDateArray(newDateArray);
-      setWeekOfDates(formattedWeekDateArray);
-    };
-    console.log("week of dates!!!!!!!! " + weekOfDates[0].dayNumber)
-    return (
-      <View style={styles.container}>
-        <WeekSelector
-          formattedDayOfWeekDate={weekOfDates}
-          onWeekChange={onWeekChange}
-        />
-      </View>
-    );
-  }
-);
+  const [startDateForWeek, setStartDateForWeek] = useState(startDate);
+  const [selectedWeekArrayOfDateObject, setSelectedWeekArrayOfDateObject] = useState(
+    weekOfDateObjectsArray(startDateForWeek),
+  );
+  const onWeekChange = (direction) => {
+    var newStartDate = weekFromStartDate(direction, startDateForWeek,)
+    console.log("newStartDate " + newStartDate)
+    setStartDateForWeek(newStartDate);
+    setSelectedWeekArrayOfDateObject(weekOfDateObjectsArray(newStartDate));
+  };
+  return (
+    <View style={styles.container}>
+      <WeekSelector
+        formattedArrayOfDateObjs={selectedWeekArrayOfDateObject}
+        onWeekChange={onWeekChange}
+      />
+    </View>
+  );
+});
+
 
 const styles = StyleSheet.create({
   container: {
