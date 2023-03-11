@@ -3,6 +3,7 @@ import { View, Text, StyleSheet,  } from "react-native";
 import WeekSelector from "./WeekSelector";
 import { weekOfDateObjectsArray, weekFromStartDate } from "../../utils/dateFunctions";
 import { findShiftsForUserForSevenDays } from "../../utils/filterFunctions";
+import MonthYearComponent from "./MonthYearComponent";
 
 const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}) => {
   const [startDateForWeek, setStartDateForWeek] = useState(startDate);
@@ -17,7 +18,7 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}
   };
   return (
     <View style={styles.container}>
-      <Text>Weekly Schedule</Text>
+      <MonthYearComponent Week={selectedWeekArrayOfDateObject} />
       <WeekSelector
         formattedArrayOfDateObjs={selectedWeekArrayOfDateObject}
         onWeekChange={onWeekChange}
@@ -30,6 +31,7 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 60,
   },
 });
 
