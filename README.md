@@ -3,6 +3,7 @@
 StoneSchedules is a mobile application built using React Native Expo that facilitates the management of employee schedules for a restaurant. The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees.
 
 ## Table of Contents
+
 - [StoneSchedules](#stoneschedules)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
@@ -44,7 +45,6 @@ StoneSchedules is a mobile application built using React Native Expo that facili
     ```
 
 4. Start the application by running `npm start`.
-
 Note: The backend of the project is not located in this repository. The backend is written in C#. Example data being returned from the database can be found in ./assets/shiftDataExample.json.
 
 ## Usage
