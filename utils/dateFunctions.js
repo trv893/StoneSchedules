@@ -29,7 +29,6 @@ export const handleStartDateChange = (newStartDate) => {
   setStartDate(newStartDate);
 };
 
-
 /**
  * Formats a date object into the format "day-of-week day-of-month-suffix"
  * @param {Date} date The date object to format
@@ -38,33 +37,41 @@ export const handleStartDateChange = (newStartDate) => {
  * @example
  * const date = new Date('2022-03-14T00:00:00.000Z');
  * const formattedDate = formatDayOfWeekDate(date);
- * console.log(formattedDate); // Output: { dayString: 'Mon', dayNumber: '14th' }
+ * console.log(formattedDate); // Output: [{dayString: 'Fri', dayNumber: '10th'},
+{dayString: 'Sat', dayNumber: '11th'},
+{dayString: 'Sun', dayNumber: '12th'},
+{dayString: 'Mon', dayNumber: '13th'},
+{dayString: 'Tue', dayNumber: '14th'},
+{dayString: 'Wed', dayNumber: '15th'},
+{dayString: 'Thu', dayNumber: '16th'}]
  */
-export const formatDayOfWeekDate = (date) => {
+export const formatDayOfWeekDate = (startDate) => {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-  // Get the day of the month from the date object
-  const day = date.getDate();
-
-  // Get the abbreviated day of the week from the daysOfWeek array
-  let dayString = daysOfWeek[date.getDay()];
-
-  // Determine the correct suffix for the day of the month
-  let dayNumber = day;
-  if (day > 10 && day < 20) {
-    // For numbers between 11 and 19, the suffix is always "th"
-    dayString += 'th';
-  } else {
-    switch (day % 10) {
-      case 1: dayString += 'st'; break;
-      case 2: dayString += 'nd'; break;
-      case 3: dayString += 'rd'; break;
-      default: dayString += 'th'; break;
-    }
+  const formattedDates = [];
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
+    const dayString = daysOfWeek[date.getDay()];
+    const dayNumber = date.getDate() + getNumberSuffix(date.getDate());
+    formattedDates.push({ dayString, dayNumber });
   }
+  console.log("formatDayOfWeekDate", formattedDates)
+  return formattedDates;
+}
 
-  // Return an object with the formatted day string and day number
-  return { dayString, dayNumber };
+function getNumberSuffix(day) {
+  if (day >= 11 && day <= 13) {
+    return 'th';
+  }
+  switch (day % 10) {
+    case 1:
+      return 'st';
+    case 2:
+      return 'nd';
+    case 3:
+      return 'rd';
+    default:
+      return 'th';
+  }
 }
 
 
@@ -91,16 +98,11 @@ export const createDateStringArrayForSevenDays = (startDate) => {
   return dateStringArray;
 }
 
-
 /**
- * Returns an array of 7 date objects starting from the specified start date
- * @param {Date} startDate The start date for the week
- * @returns {Array} An array of 7 date objects starting from the specified start date
- *
- * @example
- * const startDate = new Date('2023-03-13T00:00:00.000Z');
- * const weekOfDates = getWeekOfDateObjects(startDate);
- * console.log(weekOfDates); // Output: [Mon Mar 13 2023 01:00:00 GMT+0100 (Central European Standard Time), Tue Mar 14 2023 01:00:00 GMT+0100 (Central European Standard Time), Wed Mar 15 2023 01:00:00 GMT+0100 (Central European Standard Time), Thu Mar 16 2023 01:00:00 GMT+0100 (Central European Standard Time), Fri Mar 17 2023 01:00:00 GMT+0100 (Central European Standard Time), Sat Mar 18 2023 01:00:00 GMT+0100 (Central European Standard Time), Sun Mar 19 2023 01:00:00 GMT+0100 (Central European Standard Time)]
+ * Returns an array of seven dates that come before or after the input `weekArray`,
+ * depending on the value of `direction`.
+ * @param {Date[]} weekArray - An array of 7 Date objects representing a week
+ * @returns {Object[]} - An array of 7 objects representing a week
  */
 export const getWeekOfDateObjects = (startDate) => {
   // Initialize an empty array to hold the date objects
@@ -112,9 +114,65 @@ export const getWeekOfDateObjects = (startDate) => {
     const date = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
 
     // Add the new date object to the weekOfDates array
-    weekOfDates.push(date);
+    const { dayString, dayNumber } = formatDayOfWeekDate(date);
+    weekOfDates.push({ dayString, dayNumber });
   }
+  console.log("getWeekOfDateObjects" + weekOfDates[0].dayString)
 
   // Return the array of date objects
   return weekOfDates;
 }
+
+
+/**
+ * Returns an array of seven dates that come before or after the input `weekArray`,
+ * depending on the value of `direction`.
+ * @param {Date[]} weekArray - An array of 7 Date objects representing a week
+ * @param {string} direction - Either "prev" or "next"
+ * @returns {Date[]} - An array of 7 Date objects representing the adjacent week
+ * @throws {Error} - If `direction` is not "prev" or "next"
+ */
+export const getAdjacentWeek = (weekArray, direction) => {
+  const dayInMs = 86400000; // Number of milliseconds in a day
+
+  // Calculate the start and end of the previous and next weeks based on the input `weekArray`
+  const weekStart = new Date(weekArray[0].getTime() - dayInMs * 7);
+  const weekEnd = new Date(weekArray[6].getTime() + dayInMs * 7);
+
+  if (direction === "prev") {
+    // Return an array of the seven dates preceding `weekArray`
+    const prevWeek = [];
+    for (let i = 0; i < 7; i++) {
+      prevWeek.push(new Date(weekStart.getTime() + dayInMs * i));
+    }
+    return prevWeek;
+  } else if (direction === "next") {
+    // Return an array of the seven dates that come after `weekArray`
+    const nextWeek = [];
+    for (let i = 0; i < 7; i++) {
+      nextWeek.push(new Date(weekEnd.getTime() + dayInMs * i));
+    }
+    return nextWeek;
+  } else {
+    // Invalid `direction` value
+    throw new Error("Invalid direction value");
+  }
+}
+
+/**
+ * Formats an array of objects with `dayString` and `dayNumber` keys into an array of objects with `dayString` and `dayNumber` keys.
+ *
+ * @param {Object[]} dateArray - An array of objects with `dayString` and `dayNumber` keys to format.
+ * @returns {Object[]} An array of objects with `dayString` and `dayNumber` keys.
+ *
+ * @example
+ * const dateArray = [{ dayString: 'Mon', dayNumber: '14th' }, { dayString: 'Tue', dayNumber: '15th' }];
+ * const formattedDateArray = formattedDateArray(dateArray);
+ * console.log(formattedDateArray); // Output: [{ dayString: 'Mon', dayNumber: '14th' }, { dayString: 'Tue', dayNumber: '15th' }]
+ */
+export const formattedDateArray = (dateArray) => {
+  return dateArray.map(({ dayString, dayNumber }) => {
+    return { dayString, dayNumber };
+  });
+}
+
