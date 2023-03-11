@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
+import { formatDayOfWeekDate } from "../../utils/dateFunctions";
 
-const WeekSelector = ({ startDate }) => {
-  var stringDate = startDate.toString();
-
-
+const WeekSelector = ({ setNewStartDateForWeekSet, setWeekOfDatesArray}) => {
+  const [weekOfDates, setWeekOfDates] = useState(weekOfDatesArray);
+  const [formattedDayofWeekDate, setFormattedDayofWeekDate] = useState(formatDayOfWeekDate(weekOfDates));
   return (
     <View style={styles.container}>
       <Text>{stringDate}</Text>

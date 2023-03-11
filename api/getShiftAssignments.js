@@ -1,7 +1,20 @@
 import { formatDateToString } from "../utils/dateFunctions";
 
 /**
- * Retrieves shift assignments from the API for the given date range and updates the state variables.
+ * Resolves with an array of shift assignments, where each assignment is an object
+ * with the following properties:
+ *
+ * - shiftAssignmentId (number): the ID of the shift assignment
+ * - userId (number): the ID of the user assigned to the shift
+ * - shiftId (number): the id of the time of the shift the user is assigned to where 1 is "AM" and 2 is "PM"
+ * - dateAssigned (string): the date of the assigned shift in "2023-03-14T00:00:00" format
+ * - sectionId (number): the ID of the section the shift is assigned to
+ * - releasedByUser (boolean): whether the shift has been released by the user
+ * - dayId (number): the ID of the day the shift is assigned to
+ * - section (string): the name of the section the user is assigned to for that shift
+ * - assignee (string): the name of the user assigned to the shift
+ * - releaseByUserId (number): the ID of the true of false value indicating whether the shift has been released by the user
+ * - shiftName (string): the string value of the time of the shift, either "AM" or "PM". 
  *
  * @param {Date} startDate - The start date for the range of shift assignments to retrieve.
  * @param {Date} endDate - The end date for the range of shift assignments to retrieve.
@@ -9,6 +22,43 @@ import { formatDateToString } from "../utils/dateFunctions";
  * @param {function} setIsLoading - The setState function to update the isLoading state variable.
  * @param {function} setError - The setState function to update the error state variable.
  * @returns {Promise<void>} A Promise that resolves when the shift assignments have been retrieved and updated in state, or rejects with an error message.
+ *
+ * @example
+ * getShiftAssignments("2023-03-10", "2023-03-15"), setShiftData, setIsLoading, setError)
+ *   .then(shiftAssignments => {
+ *     console.log(shiftAssignments);
+ *     // Output:
+ *     // [
+ *     //   {
+ *     //     "shiftAssignmentId": 4988,
+ *     //     "userId": 2,
+ *     //     "shiftId": 1,
+ *     //     "dateAssigned": "2023-03-13T00:00:00",
+ *     //     "sectionId": 5,
+ *     //     "releasedByUser": false,
+ *     //     "dayId": 2,
+ *     //     "section": "5",
+ *     //     "assignee": "Aleesha Johnson",
+ *     //     "releaseByUserId": 0,
+ *     //     "shiftName": "AM"
+ *     //   },
+ *     //   {
+ *     //     "shiftAssignmentId": 4989,
+ *     //     "userId": 2,
+ *     //     "shiftId": 1,
+ *     //     "dateAssigned": "2023-03-14T00:00:00",
+ *     //     "sectionId": 5,
+ *     //     "releasedByUser": true,
+ *     //     "dayId": 3,
+ *     //     "section": "5",
+ *     //     "assignee": "Aleesha Johnson",
+ *     //     "releaseByUserId": 0,
+ *     //     "shiftName": "AM"
+ *     //   },
+ *     //   ...
+ *     // ]
+ *   })
+ *   .catch(error => console.error(error));
  */
 export const getShiftAssignments = async (
   startDate,

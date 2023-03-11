@@ -1,28 +1,21 @@
 /**
- * Creates an array of ISO date strings for 7 days starting from the given start date.
- *
- * @param {Date} startDate - The start date for the range of dates to create.
- * @returns {Array} An array of ISO date strings for 7 days starting from the given start date whose format matches dateAssigned format from the database .
- */
-export const createDateStringArrayForSevenDays = (startDate) => {
-  const dateStringArray = [];
-
-  for (let i = 0; i < 7; i++) {
-    const currentDate = new Date(startDate.getTime() + (i * 24 * 60 * 60 * 1000));
-    const dateString = currentDate.toISOString().substring(0, 10);
-    dateStringArray.push(dateString);
-  }
-
-  return dateStringArray;
-}
-
-/**
  * Finds the shifts for a given user for 7 days starting at the given start date, and returns an array of the corresponding shift objects.
  *
  * @param {Date} startDate - The start date for the range of shifts to find.
  * @param {string} userId - The ID of the user for which to find shifts.
  * @param {Array} shiftData - An array of shift objects to search through.
  * @returns {Array} An array of shift objects for the given user for 7 days starting at the given start date.
+ *
+ * @example
+ * const startDate = new Date();
+ * const userId = '123';
+ * const shiftData = [
+ *   { id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z' },
+ *   { id: '2', userId: '456', dateAssigned: '2022-03-15T00:00:00.000Z' },
+ *   { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z' },
+ * ];
+ * const sevenDaysShiftsForUser = findShiftsForUserForSevenDays(startDate, userId, shiftData);
+ * console.log(sevenDaysShiftsForUser); // Output: [{ id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z' }, { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z' }]
  */
 export const findShiftsForUserForSevenDays = (startDate, userId, shiftData) => {
   const sevenDaysShifts = [];
@@ -45,6 +38,16 @@ export const findShiftsForUserForSevenDays = (startDate, userId, shiftData) => {
  * @param {Date} startDate - The start date for the range of dates to search.
  * @param {Array} shiftData - An array of shift objects to search through.
  * @returns {Array} An array of all released shift objects within 7 days from the given start date.
+ *
+ * @example
+ * const startDate = new Date();
+ * const shiftData = [
+ *   { id: '1', userId: '123', releasedByUser: true, dateAssigned: '2022-03-14T00:00:00.000Z' },
+ *   { id: '2', userId: '456', releasedByUser: true, dateAssigned: '2022-03-15T00:00:00.000Z' },
+ *   { id: '3', userId: '123', releasedByUser: false, dateAssigned: '2022-03-16T00:00:00.000Z' },
+ * ];
+ * const sevenDaysReleasedShifts = findAllReleasedShiftsForSevenDays(startDate, shiftData);
+ * console.log(sevenDaysReleasedShifts); // Output: [{ id: '1', userId: '123', releasedByUser: true, dateAssigned: '2022-03-14T00:00:00.000Z' }, { id: '2', userId: '456', releasedByUser: true, dateAssigned: '2022-03-15T00:00:00.000Z' }]
  */
 export const findAllReleasedShiftsForSevenDays = (startDate, shiftData) => {
   const sevenDaysShifts = [];
@@ -58,6 +61,7 @@ export const findAllReleasedShiftsForSevenDays = (startDate, shiftData) => {
   
   return sevenDaysShifts;
 }
+
 
 /**
  * Retrieves data for the WeeklySchedule component for a specific user and week.
@@ -85,16 +89,36 @@ export const getDataForWeeklySchedule = (shiftData, userId, startDate, setWeekOf
  * @param {Array} shiftData - An array of shift objects to filter.
  * @param {string} userId - The ID of the user to filter the shiftData for.
  * @returns {Array} An array of shift objects filtered for the given userId.
+ *
+ * @example
+ * const shiftData = [
+ *   { id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true },
+ *   { id: '2', userId: '456', dateAssigned: '2022-03-15T00:00:00.000Z', releasedByUser: false },
+ *   { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true },
+ * ];
+ * const userId = '123';
+ * const shiftsForUser = filterShiftDataForUser(shiftData, userId);
+ * console.log(shiftsForUser); // Output: [{ id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true }, { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true }]
  */
 export const filterShiftDataForUser = (shiftData, userId) => {
   return shiftData.filter((shift) => shift.userId === userId);
 }
+
 
 /**
  * Filters the shiftData array for objects where the 'releasedByUser' property is true.
  *
  * @param {Array} shiftData - An array of shift objects to filter.
  * @returns {Array} An array of shift objects where the 'releasedByUser' property is true.
+ *
+ * @example
+ * const shiftData = [
+ *   { id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true },
+ *   { id: '2', userId: '456', dateAssigned: '2022-03-15T00:00:00.000Z', releasedByUser: false },
+ *   { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true },
+ * ];
+ * const releasedShifts = filterShiftDataForReleasedShifts(shiftData);
+ * console.log(releasedShifts); // Output: [{ id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true }, { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true }]
  */
 export const filterShiftDataForReleasedShifts = (shiftData) => {
   return shiftData.filter((shift) => shift.releasedByUser === true);
