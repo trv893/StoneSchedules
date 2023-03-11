@@ -1,5 +1,7 @@
 # StoneSchedules
 
+![Stoneschedules](https://i.imgur.com/6RzUjsD.png)
+
 StoneSchedules is a mobile application built using React Native Expo that facilitates the management of employee schedules for a restaurant. The application allows employees to view their schedules, release shifts for pickup by other employees, pick up released shifts, and request specific shifts from other employees.
 
 ## Table of Contents
@@ -14,7 +16,6 @@ StoneSchedules is a mobile application built using React Native Expo that facili
     - [Shift Pick Up](#shift-pick-up)
     - [Shift Request](#shift-request)
   - [Contributing](#contributing)
-  - [License](#license)
 
 ## Features
 
@@ -45,7 +46,8 @@ StoneSchedules is a mobile application built using React Native Expo that facili
     ```
 
 4. Start the application by running `npm start`.
-Note: The backend of the project is not located in this repository. The backend is written in C#. Example data being returned from the database can be found in ./assets/shiftDataExample.json.
+
+>Note: The backend of the project is not located in this repository. The backend is written in C#. Example data being returned from the database can be found in `./assets/shiftDataExample.json`.
 
 ## Usage
 
@@ -73,7 +75,7 @@ StoneSchedules allows employees to:
 ### Shift Request
 
 - Employees can request to pick up a specific shift from another employee, regardless of whether that shift has been released or not.
-- The request a pick up component will render a list of all employees working on that date at that shift time and what section each is scheduled for and a TouchableOpacity that will send a pick-up request to that user.
+- The request a pick up component will render a list of all employees working on that date at that shift time and what section each is scheduled for and a `TouchableOpacity` that will send a pick-up request to that user.
 
 ## Contributing
 
@@ -84,7 +86,3 @@ We welcome contributions to StoneSchedules! To contribute, please follow these s
 3. Commit your changes: `git commit -am 'Add some feature'`.
 4. Push to the branch: `git push origin my-new-feature`.
 5. Submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
