@@ -2,6 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
+
 const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
   const today = new Date(); // Create a new Date object for today's date
 
@@ -17,7 +18,7 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={onPressPrevious}>
+      <TouchableOpacity style={styles.buttonPrev} onPress={onPressPrevious}>
         <LinearGradient
           colors={["#E60707", "#DE0202", "#D40404", "#CB0202", "#C10303", "#B80000"]}
           start={{x: 0, y: 0}}
@@ -36,8 +37,8 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
               key={index}
               style={[
                 styles.dayContainer,
-                index === formattedArrayOfDateObjs.length - 1 ? { borderEndWidth: 1, borderTopRightRadius: 5, borderBottomRightRadius: 5 } : { borderEndWidth: 1 },
-                index === 0 ? { borderStartWidth: 1, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 } : null,
+                index === formattedArrayOfDateObjs.length - 1 ? { borderEndWidth: 1, borderTopRightRadius: 5, borderBottomRightRadius: 5, borderColor: "#760606",} : { borderEndWidth: 1, borderColor: "#760606", },
+                index === 0 ? { borderStartWidth: 1, borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderColor: "#760606" } : null,
                 isToday ? { backgroundColor: "#E61919" } : null, // Set background color to gray if the date is today's date
               ]}
             >
@@ -47,7 +48,7 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
           );
         })}
       </View>
-      <TouchableOpacity style={styles.button} onPress={onPressNext}>
+      <TouchableOpacity style={styles.buttonNext} onPress={onPressNext}>
         <LinearGradient
           colors={["#B80000", "#C10303", "#CB0202", "#D40404", "#DE0202", "#E60707"]}
           start={{x: 0, y: 0}}
@@ -58,31 +59,30 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
         </LinearGradient>
       </TouchableOpacity>
     </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 30,
     marginHorizontal: "auto",
-    width: "90%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   weekContainer: {
     flexDirection: "row",
-    borderColor: "gray",
+    borderColor: "#760606",
     paddingHorizontal: 2,
   },
   dayContainer: {
-    flex: 1,
     alignItems: "center",
     borderColor: "#760606",
     borderTopWidth: 1, // Add top border
     borderBottomWidth: 1, // Add bottom border
-    paddingHorizontal: 4,
-    paddingVertical: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
   },
   
   dayString: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
-  button: {
+  buttonPrev: {
     borderRadius: 5,
     shadowColor: 'black',
     shadowOffset: {
@@ -103,6 +103,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3,
     elevation: 3,
+    marginRight: 4,
+  },
+  buttonNext: {
+    borderRadius: 5,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 3,
+    marginLeft: 4,
   },
   gradient: {
     width: 30,
@@ -115,10 +128,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 23,
-    fontWeight: 'bolder',
+    fontWeight: 'bold',
     paddingBottom: 8,
   }
-  
 });
 
 

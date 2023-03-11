@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Dimensions  } from "react-native";
 import WeeklySchedule from "./components/userWeeklySchedule/WeeklySchedule";
 import { getShiftAssignments } from "./api/getShiftAssignments";
 import ErrorScreen from "./components/ErrorScreen";
@@ -20,6 +20,8 @@ const App = () => {
   //const [userId, setUserId] = useState(5);
   const [shiftsForUserId, setShiftsForUserId] = useState(null);
   const [releasedShifts, setReleasedShifts] = useState([]);
+
+  const { width, height } = Dimensions.get('window')
 
   // Create a memoized object of props to pass to WeeklySchedule component
   const weeklyScheduleProps = useMemo(
@@ -50,8 +52,8 @@ const App = () => {
     var filteredReleasedShifts = filterShiftDataForReleasedShifts(fakeData);
     setShiftsForUserId(filteredShiftsForUserId);
     setReleasedShifts(filteredReleasedShifts);
-    //console.log("shift data from useEffect: " + filteredShiftsForUserId)
-    //console.log("released shifts from useEffect: " + filteredReleasedShifts)
+    console.log("shift data from useEffect: " + filteredShiftsForUserId)
+    console.log("released shifts from useEffect: " + filteredReleasedShifts)
   }, [shiftData]);
   
   

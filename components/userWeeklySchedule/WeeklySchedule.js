@@ -17,6 +17,7 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}
   };
   return (
     <View style={styles.container}>
+      <Text>Weekly Schedule</Text>
       <WeekSelector
         formattedArrayOfDateObjs={selectedWeekArrayOfDateObject}
         onWeekChange={onWeekChange}
@@ -29,16 +30,6 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  scheduleItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "gray",
-    padding: 10,
-    margin: 10,
   },
 });
 
