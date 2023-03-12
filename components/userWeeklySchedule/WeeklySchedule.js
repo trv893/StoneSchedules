@@ -28,7 +28,8 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts,
         onWeekChange={onWeekChange}
       />
       <DayList
-
+        weekDateData={selectedWeekArrayOfDateObject}
+        userSchedule = {userCurrentWeekShiftData}
        style={styles.dayList} />
     </View>
   );

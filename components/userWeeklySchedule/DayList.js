@@ -51,25 +51,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const DayList = ({ userShiftData, releasedShiftData }) => {
-  const data = [
-    'Line 1',
-    'Line 2',
-    'Line 3',
-    'Line 4',
-    'Line 5',
-    'Line 6',
-    'Line 7',
-  ];
+const DayList = ({ weekDateData, userSchedule }) => {
 
   return (
     <View style={styles.container}>
-      {data.map((item, index) => (
+      {weekDateData.map((item, index) => (
         <View style={styles.lineContainer} key={index}>
-          <View style={styles.leftComponent} />
+          <View style={styles.leftComponent}>
+            <Text>{item.dayString}</Text>
+            <Text>{item.dayNumberString}</Text>
+          </View>
           <View style={styles.rightComponent}>
-            <View style={styles.topRightRow} />
-            <View style={styles.bottomRightRow} />
+            <View style={styles.topRightRow}>
+                {/* <Text>{userSchedule[index].sectionId}</Text> */}
+            </View>
+            <View style={styles.bottomRightRow}>
+                {/* <Text>{userSchedule[index].sectionId}</Text> */}
+            </View>
           </View>
         </View>
       ))}

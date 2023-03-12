@@ -110,7 +110,7 @@ export const findShiftsForUserForSevenDays = (startDate, userId, shiftData) => {
       shifts.push(shift);
     }
   }
-  console.log("shifts" + shifts)
+  console.log("shifts !!!" + shifts[0][0])
 
   return shifts;
 };
