@@ -4,7 +4,6 @@ import WeeklySchedule from "./components/userWeeklySchedule/WeeklySchedule";
 import { getShiftAssignments } from "./api/getShiftAssignments";
 import ErrorScreen from "./components/ErrorScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { filterShiftDataForUser, filterShiftDataForReleasedShifts } from "./utils/filterFunctions";
 
 //TODO: delete this after testing
 import fakeData from "./assets/shiftDataExample.json";
@@ -18,20 +17,16 @@ const App = () => {
   const [error, setError] = useState(null);
   const userId = 5;
   //const [userId, setUserId] = useState(5);
-  const [shiftsForUserId, setShiftsForUserId] = useState(null);
-  const [releasedShifts, setReleasedShifts] = useState([]);
-
   const { width, height } = Dimensions.get('window')
 
   // Create a memoized object of props to pass to WeeklySchedule component
   const weeklyScheduleProps = useMemo(
     () => ({
+      shiftData,
       startDate,
-      shiftsForUserId,
-      releasedShifts,
       userId,
     }),
-    [shiftsForUserId, releasedShifts]
+    [shiftData, startDate, userId]
   );
 
   useEffect(() => {
@@ -46,18 +41,6 @@ const App = () => {
     );
   
   }, []);
-  // Call setShiftsForUserId and setReleasedShifts after setShiftData
-  useEffect(() => {
-    var filteredShiftsForUserId = filterShiftDataForUser(shiftData, userId);
-    var filteredReleasedShifts = filterShiftDataForReleasedShifts(fakeData);
-    setShiftsForUserId(filteredShiftsForUserId);
-    setReleasedShifts(filteredReleasedShifts);
-    //console.log("shift data from useEffect: " + filteredShiftsForUserId)
-    //console.log("released shifts from useEffect: " + filteredReleasedShifts)
-  }, [shiftData]);
-  
-  
-  
 
   // Render the ErrorScreen component if an error occurs during API call
   if (error) {
@@ -86,6 +69,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    top: 60,
     backgroundColor: "white",
   },
   loader: {

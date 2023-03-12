@@ -2,23 +2,24 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet,  } from "react-native";
 import WeekSelector from "./WeekSelector";
 import { weekOfDateObjectsArray, weekFromStartDate } from "../../utils/dateFunctions";
-import { findShiftsForUserForSevenDays } from "../../utils/filterFunctions";
+import {filterShiftData } from "../../utils/filterFunctions";
 import MonthYearComponent from "./MonthYearComponent";
 import DayList from "./DayList";
+import shiftDataExample from "../../assets/shiftDataExample.json";
 
-const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts, userId}) => {
+const WeeklySchedule = React.memo(({ shiftData, startDate, userId,}) => {
   const [startDateForWeek, setStartDateForWeek] = useState(startDate);
   const [selectedWeekArrayOfDateObject, setSelectedWeekArrayOfDateObject] = useState(
     weekOfDateObjectsArray(startDateForWeek),
   );
-  const [userCurrentWeekShiftData, setUserShiftData] = useState(
-    findShiftsForUserForSevenDays(startDateForWeek, userId, shiftsForUserId)
-  );
   const onWeekChange = (direction) => {
     var newStartDate = weekFromStartDate(direction, startDateForWeek,)
-    console.log("newStartDate " + newStartDate)
     setStartDateForWeek(newStartDate);
     setSelectedWeekArrayOfDateObject(weekOfDateObjectsArray(newStartDate));
+    var test = filterShiftData(shiftDataExample, {
+      date: '3/12/2023',
+    } )
+    console.log("TEST:  " + test.length)
   };
   return (
     <View style={styles.container}>
@@ -29,18 +30,21 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts,
       />
       <DayList
         weekDateData={selectedWeekArrayOfDateObject}
-        userSchedule = {userCurrentWeekShiftData}
+        fullSchedule = {shiftData}
        style={styles.dayList} />
     </View>
   );
 });
 
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 60,
   },
+  dayList: {
+  }
 });
 
 export default WeeklySchedule;

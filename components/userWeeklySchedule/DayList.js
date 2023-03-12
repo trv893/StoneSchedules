@@ -1,78 +1,96 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+const containerWidth = screenWidth * 0.9;
 const containerHeight = screenHeight * 0.8;
 const lineHeight = containerHeight / 7;
 
 const styles = StyleSheet.create({
   container: {
-    height: containerHeight,
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
   },
-  lineContainer: {
-    height: lineHeight,
-    width: '95%',
-    borderWidth: 1,
-    borderColor: '#0F0',
+  listElement : {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 5,
-  },
-  leftComponent: {
-    height: '100%',
-    width: '20%',
-    backgroundColor: 'red',
+    marginTop: 10,
     borderWidth: 1,
     borderColor: 'purple',
+    borderRadius: 5,
   },
+  leftComponent: {
+    height: lineHeight * 2 ,
+    width: containerWidth * 0.2,
+    backgroundColor: 'red',
+    borderRightWidth: 1,  // Use borderRightWidth instead of borderRight
+    borderColor: 'purple',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayString: {
+    fontSize: 20,  // Set font size to 20
+    fontWeight: 'bold',  // Set font weight to bold
+    color: 'white',  // Set text color to white
+  },
+  dayNumberString: {
+    fontSize: 16,  // Set font size to 16
+    color: 'white',  // Set text color to white
+  },
+  
   rightComponent: {
-    flex: 1,
     flexDirection: 'column',
   },
   topRightRow: {
-    flex: 1,
+    height: lineHeight,
+    width: containerWidth * 0.8,
     flexDirection: 'row',
     backgroundColor: 'blue',
-    borderWidth: 1,
+    borderBottom: 1,
     borderColor: 'red',
   },
   bottomRightRow: {
-    flex: 1,
+    height: lineHeight,
+    width: containerWidth * 0.8,
     flexDirection: 'row',
     backgroundColor: 'green',
-    borderWidth: 1,
-    borderColor: 'blue',
   },
 });
 
-const DayList = ({ weekDateData, userSchedule }) => {
+const DayList = ({ weekDateData, fullSchedule }) => {
+  const renderItem = ({ item }) => (
+    <View style={styles.listElement}>
+      <View style={styles.leftComponent}>
+  <Text style={styles.dayString}>{item.dayString}</Text>
+  <Text style={styles.dayNumberString}>{item.dayNumberString}</Text>
+</View>
+
+      <View style={styles.rightComponent}>
+        <View style={styles.topRightRow}>
+          <Text>{item.dayNumberString}</Text>
+        </View>
+        <View style={styles.bottomRightRow}>
+          <Text>{item.dayNumberString}dfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdf</Text>
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      {weekDateData.map((item, index) => (
-        <View style={styles.lineContainer} key={index}>
-          <View style={styles.leftComponent}>
-            <Text>{item.dayString}</Text>
-            <Text>{item.dayNumberString}</Text>
-          </View>
-          <View style={styles.rightComponent}>
-            <View style={styles.topRightRow}>
-                {/* <Text>{userSchedule[index].sectionId}</Text> */}
-            </View>
-            <View style={styles.bottomRightRow}>
-                {/* <Text>{userSchedule[index].sectionId}</Text> */}
-            </View>
-          </View>
-        </View>
-      ))}
+      <FlatList
+        data={weekDateData}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.dayString}
+        contentContainerStyle={{ alignItems: 'center' }}
+      />
     </View>
   );
 };
+
 
 export default DayList;

@@ -1,24 +1,67 @@
-import { createDateStringArrayForSevenDays, findShiftsForUserForSevenDays, findAllReleasedShiftsForSevenDays, filterShiftDataForUser, filterShiftDataForReleasedShifts } from './filterFunctions';
+import { filterShiftData } from '../utils/filterFunctions';
 import shiftDataExample from '../assets/shiftDataExample.json';
 
-// Test createDateStringArrayForSevenDays function
-console.log(createDateStringArrayForSevenDays(new Date())); // should log an array of 7 ISO date strings starting from today's date
+const shiftData = shiftDataExample;
 
-// Test findShiftsForUserForSevenDays function
-const userId = 5; // replace with a valid user ID from the shiftDataExample file
-const startDate = new Date(); // replace with a valid start date
-const shiftsForUser = findShiftsForUserForSevenDays(startDate, userId, shiftDataExample);
-console.log(shiftsForUser); // should log an array of shifts for the given user for 7 days starting at the given start date
+describe('filterShiftData', () => {
+  it('should return an empty array if shiftData is not provided', () => {
+    const result = filterShiftData();
+    expect(result).toEqual([]);
+  });
 
-// Test findAllReleasedShiftsForSevenDays function
-const releasedShifts = findAllReleasedShiftsForSevenDays(startDate, shiftDataExample);
-console.log(releasedShifts); // should log an array of all released shift objects within 7 days from the given start date
+  it('should filter by date and shift time', () => {
+    const result = filterShiftData(shiftData, { date: '2023-03-10', shiftTime: 'PM' });
+    expect(result).toEqual([{
+      "shiftAssignmentId": 2828,
+      "userId": 2,
+      "shiftId": 2,
+      "dateAssigned": "2023-03-10T00:00:00",
+      "sectionId": 11,
+      "releasedByUser": false,
+      "dayId": 6,
+      "section": "11",
+      "assignee": "Aleesha Johnson",
+      "releaseByUserId": 0,
+      "shiftName": "PM"
+    }]);
+  });
 
-// Test filterShiftDataForUser function
-const userIdToFilter = 5; // replace with a valid user ID from the shiftDataExample file
-const shiftsFilteredForUser = filterShiftDataForUser(shiftDataExample, userIdToFilter);
-console.log(shiftsFilteredForUser); // should log an array of shift objects filtered for the given user ID
+  it('should filter by userId and release status', () => {
+    const result = filterShiftData(shiftData, { userId: 2, released: true });
+    expect(result).toEqual([{
+      "shiftAssignmentId": 4989,
+      "userId": 2,
+      "shiftId": 1,
+      "dateAssigned": "2023-03-14T00:00:00",
+      "sectionId": 5,
+      "releasedByUser": true,
+      "dayId": 3,
+      "section": "5",
+      "assignee": "Aleesha Johnson",
+      "releaseByUserId": 0,
+      "shiftName": "AM"
+    }]);
+  });
 
-// Test filterShiftDataForReleasedShifts function
-const releasedShiftsFiltered = filterShiftDataForReleasedShifts(shiftDataExample);
-console.log(releasedShiftsFiltered); // should log an array of shift objects where the 'releasedByUser' property is true
+  it('should include all shifts if released is null', () => {
+    const result = filterShiftData(shiftData, { released: null });
+    expect(result).toEqual(shiftData);
+  });
+
+  it('should not filter if no params are provided', () => {
+    const result = filterShiftData(shiftData);
+    expect(result).toEqual(shiftData);
+  });
+
+  it('should filter by userId as string or number', () => {
+    const result1 = filterShiftData(shiftData, { userId: '2' });
+    expect(result1).toEqual(shiftData.filter(shift => shift.userId === 2));
+    const result2 = filterShiftData(shiftData, { userId: 1 });
+    expect(result2).toEqual([]);
+  });
+
+  it('should handle invalid date string input', () => {
+    const result = filterShiftData(shiftData, { date: 'invalid date string' });
+    expect(result).toEqual([]);
+  });
+});
