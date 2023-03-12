@@ -46,15 +46,14 @@ const App = () => {
     );
   
   }, []);
-  
   // Call setShiftsForUserId and setReleasedShifts after setShiftData
   useEffect(() => {
     var filteredShiftsForUserId = filterShiftDataForUser(shiftData, userId);
     var filteredReleasedShifts = filterShiftDataForReleasedShifts(fakeData);
     setShiftsForUserId(filteredShiftsForUserId);
     setReleasedShifts(filteredReleasedShifts);
-    console.log("shift data from useEffect: " + filteredShiftsForUserId)
-    console.log("released shifts from useEffect: " + filteredReleasedShifts)
+    //console.log("shift data from useEffect: " + filteredShiftsForUserId)
+    //console.log("released shifts from useEffect: " + filteredReleasedShifts)
   }, [shiftData]);
   
   

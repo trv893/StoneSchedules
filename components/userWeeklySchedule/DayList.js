@@ -12,46 +12,42 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#000',
-    marginTop: 10,
+    marginTop: 30,
   },
   lineContainer: {
     height: lineHeight,
     width: '95%',
-    borderBottomWidth: 1,
+    borderWidth: 1,
     borderColor: '#0F0',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    marginBottom: 5,
   },
   leftComponent: {
     height: '100%',
     width: '20%',
     backgroundColor: 'red',
-    marginRight: 10,
     borderWidth: 1,
     borderColor: 'purple',
   },
-  topRightComponent: {
-    height: '50%',
-    width: '40%',
+  rightComponent: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  topRightRow: {
+    flex: 1,
+    flexDirection: 'row',
     backgroundColor: 'blue',
-    marginBottom: 5,
     borderWidth: 1,
     borderColor: 'red',
   },
-  bottomRightComponent: {
-    height: '50%',
-    width: '40%',
+  bottomRightRow: {
+    flex: 1,
+    flexDirection: 'row',
     backgroundColor: 'green',
-    marginTop: 5,
     borderWidth: 1,
     borderColor: 'blue',
-  },
-  lineText: {
-    fontSize: 16,
   },
 });
 
@@ -71,9 +67,10 @@ const DayList = ({ userShiftData, releasedShiftData }) => {
       {data.map((item, index) => (
         <View style={styles.lineContainer} key={index}>
           <View style={styles.leftComponent} />
-          <View style={styles.topRightComponent} />
-          <View style={styles.bottomRightComponent} />
-          <Text style={styles.lineText}>{item}</Text>
+          <View style={styles.rightComponent}>
+            <View style={styles.topRightRow} />
+            <View style={styles.bottomRightRow} />
+          </View>
         </View>
       ))}
     </View>
