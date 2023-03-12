@@ -4,11 +4,15 @@ import WeekSelector from "./WeekSelector";
 import { weekOfDateObjectsArray, weekFromStartDate } from "../../utils/dateFunctions";
 import { findShiftsForUserForSevenDays } from "../../utils/filterFunctions";
 import MonthYearComponent from "./MonthYearComponent";
+import DayList from "./DayList";
 
-const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}) => {
+const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts, userId}) => {
   const [startDateForWeek, setStartDateForWeek] = useState(startDate);
   const [selectedWeekArrayOfDateObject, setSelectedWeekArrayOfDateObject] = useState(
     weekOfDateObjectsArray(startDateForWeek),
+  );
+  const [userCurrentWeekShiftData, setUserShiftData] = useState(
+    findShiftsForUserForSevenDays(startDateForWeek, userId, shiftsForUserId)
   );
   const onWeekChange = (direction) => {
     var newStartDate = weekFromStartDate(direction, startDateForWeek,)
@@ -23,6 +27,9 @@ const WeeklySchedule = React.memo(({ startDate, shiftsForUserId, releasedShifts}
         formattedArrayOfDateObjs={selectedWeekArrayOfDateObject}
         onWeekChange={onWeekChange}
       />
+      <DayList
+
+       style={styles.dayList} />
     </View>
   );
 });

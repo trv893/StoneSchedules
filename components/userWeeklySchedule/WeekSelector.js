@@ -65,7 +65,7 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 10,
     marginHorizontal: "auto",
     flexDirection: "row",
     justifyContent: "center",

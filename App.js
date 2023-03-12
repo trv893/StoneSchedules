@@ -29,6 +29,7 @@ const App = () => {
       startDate,
       shiftsForUserId,
       releasedShifts,
+      userId,
     }),
     [shiftsForUserId, releasedShifts]
   );

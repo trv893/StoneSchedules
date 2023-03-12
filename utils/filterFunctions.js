@@ -1,4 +1,25 @@
 /**
+ * Creates an array of ISO date strings for 7 days starting from the given start date.
+ *
+ * @param {Date} startDate - The start date for the array.
+ * @returns {Array} An array of ISO date strings for 7 days starting from the given start date that match the string format of dateAssigned: "2023-03-13T00:00:00"
+ */
+export const createDateStringArrayForSevenDays = (startDate) => {
+  const result = [];
+  const date = new Date(startDate);
+
+  for (let i = 0; i < 7; i++) {
+    const dateString = date.toISOString();
+    result.push(dateString);
+    date.setDate(date.getDate() + 1);
+  }
+  console.log("result from createDateStringArrayForSevenDays: ", result)
+
+  return result;
+}
+
+
+/**
  * Finds the shifts for a given user for 7 days starting at the given start date, and returns an array of the corresponding shift objects.
  *
  * @param {Date} startDate - The start date for the range of shifts to find.
@@ -10,12 +31,12 @@
  * const startDate = new Date();
  * const userId = '123';
  * const shiftData = [
- *   { id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z' },
- *   { id: '2', userId: '456', dateAssigned: '2022-03-15T00:00:00.000Z' },
- *   { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z' },
+ *   { id: '1', userId: '123', dateAssigned: "2023-03-13T00:00:00" },
+ *   { id: '2', userId: '456', dateAssigned: "2023-03-13T00:00:00" },
+ *   { id: '3', userId: '123', dateAssigned: "2023-03-13T00:00:00" },
  * ];
  * const sevenDaysShiftsForUser = findShiftsForUserForSevenDays(startDate, userId, shiftData);
- * console.log(sevenDaysShiftsForUser); // Output: [{ id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z' }, { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z' }]
+ * console.log(sevenDaysShiftsForUser); // Output: [{ id: '1', userId: '123', dateAssigned: "2023-03-13T00:00:00" }, { id: '3', userId: '123', dateAssigned: "2023-03-13T00:00:00" }]
  */
 export const findShiftsForUserForSevenDays = (startDate, userId, shiftData) => {
   const sevenDaysShifts = [];
@@ -28,6 +49,7 @@ export const findShiftsForUserForSevenDays = (startDate, userId, shiftData) => {
       sevenDaysShifts.push(shift); // If a shift is found, add it to the array
     }
   }
+  console.log("shifts for user: " + sevenDaysShifts.length)
   
   return sevenDaysShifts;
 }
@@ -42,12 +64,12 @@ export const findShiftsForUserForSevenDays = (startDate, userId, shiftData) => {
  * @example
  * const startDate = new Date();
  * const shiftData = [
- *   { id: '1', userId: '123', releasedByUser: true, dateAssigned: '2022-03-14T00:00:00.000Z' },
- *   { id: '2', userId: '456', releasedByUser: true, dateAssigned: '2022-03-15T00:00:00.000Z' },
- *   { id: '3', userId: '123', releasedByUser: false, dateAssigned: '2022-03-16T00:00:00.000Z' },
+ *   { id: '1', userId: '123', releasedByUser: true, dateAssigned: "2023-03-13T00:00:00" },
+ *   { id: '2', userId: '456', releasedByUser: true, dateAssigned: "2023-03-13T00:00:00" },
+ *   { id: '3', userId: '123', releasedByUser: false, dateAssigned: "2023-03-13T00:00:00" },
  * ];
  * const sevenDaysReleasedShifts = findAllReleasedShiftsForSevenDays(startDate, shiftData);
- * console.log(sevenDaysReleasedShifts); // Output: [{ id: '1', userId: '123', releasedByUser: true, dateAssigned: '2022-03-14T00:00:00.000Z' }, { id: '2', userId: '456', releasedByUser: true, dateAssigned: '2022-03-15T00:00:00.000Z' }]
+ * console.log(sevenDaysReleasedShifts); // Output: [{ id: '1', userId: '123', releasedByUser: true, dateAssigned: "2023-03-13T00:00:00" }, { id: '2', userId: '456', releasedByUser: true, dateAssigned: "2023-03-13T00:00:00" }]
  */
 export const findAllReleasedShiftsForSevenDays = (startDate, shiftData) => {
   const sevenDaysShifts = [];
@@ -92,13 +114,13 @@ export const getDataForWeeklySchedule = (shiftData, userId, startDate, setWeekOf
  *
  * @example
  * const shiftData = [
- *   { id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true },
- *   { id: '2', userId: '456', dateAssigned: '2022-03-15T00:00:00.000Z', releasedByUser: false },
- *   { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true },
+ *   { id: '1', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true },
+ *   { id: '2', userId: '456', dateAssigned: "2023-03-13T00:00:00", releasedByUser: false },
+ *   { id: '3', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true },
  * ];
  * const userId = '123';
  * const shiftsForUser = filterShiftDataForUser(shiftData, userId);
- * console.log(shiftsForUser); // Output: [{ id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true }, { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true }]
+ * console.log(shiftsForUser); // Output: [{ id: '1', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true }, { id: '3', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true }]
  */
 export const filterShiftDataForUser = (shiftData, userId) => {
   return shiftData.filter((shift) => shift.userId === userId);
@@ -113,12 +135,12 @@ export const filterShiftDataForUser = (shiftData, userId) => {
  *
  * @example
  * const shiftData = [
- *   { id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true },
- *   { id: '2', userId: '456', dateAssigned: '2022-03-15T00:00:00.000Z', releasedByUser: false },
- *   { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true },
+ *   { id: '1', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true },
+ *   { id: '2', userId: '456', dateAssigned: "2023-03-13T00:00:00", releasedByUser: false },
+ *   { id: '3', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true },
  * ];
  * const releasedShifts = filterShiftDataForReleasedShifts(shiftData);
- * console.log(releasedShifts); // Output: [{ id: '1', userId: '123', dateAssigned: '2022-03-14T00:00:00.000Z', releasedByUser: true }, { id: '3', userId: '123', dateAssigned: '2022-03-16T00:00:00.000Z', releasedByUser: true }]
+ * console.log(releasedShifts); // Output: [{ id: '1', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true }, { id: '3', userId: '123', dateAssigned: "2023-03-13T00:00:00", releasedByUser: true }]
  */
 export const filterShiftDataForReleasedShifts = (shiftData) => {
   return shiftData.filter((shift) => shift.releasedByUser === true);
