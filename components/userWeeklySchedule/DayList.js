@@ -78,6 +78,7 @@ const DayList = ({ weekDateData, fullSchedule }) => {
       <View style={styles.rightComponent}>
         <View style={styles.topRightRow}>
           <Text style={styles.listElement}>
+            Section: 
             {
               filterShiftData(fullSchedule, {
                 userId: 4,

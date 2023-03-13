@@ -2,6 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { PrevButton, NextButton } from "../Buttons";
+//import DayContainer from "../WeekSelector/DayContainer";
 
 const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
   const today = new Date(); // Create a new Date object for today's date
@@ -21,7 +22,12 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
   return (
     <View style={styles.container}>
       <PrevButton onPress={onPressPrevious} />
-      <View style={styles.weekContainer}>
+      <LinearGradient
+        colors={["#F9F9F9", "#F5F5F5", "#F2F2F2", "#F9F9F9"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.weekContainer}
+      >
         {formattedArrayOfDateObjs.map((formattedDate, index) => {
           const dateObj = formattedDate.dateObj;
           const isToday =
@@ -85,7 +91,7 @@ const WeekSelector = ({ formattedArrayOfDateObjs, onWeekChange }) => {
             </View>
           );
         })}
-      </View>
+      </LinearGradient>
       <NextButton onPress={onPressNext} />
     </View>
   );
@@ -106,8 +112,8 @@ const styles = StyleSheet.create({
   dayContainer: {
     alignItems: "center",
     borderColor: "#760606",
-    borderTopWidth: 1, // Add top border
-    borderBottomWidth: 1, // Add bottom border
+    borderTopWidth: 1, 
+    borderBottomWidth: 1, 
     paddingHorizontal: 6,
     paddingVertical: 6,
   },
