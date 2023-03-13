@@ -64,6 +64,7 @@ export const filterShiftData = (shiftData, params = {}) => {
     (released === null || shift.releasedByUser === (released === true)) &&
     (!shiftTime || shift.shiftName === shiftTime.toUpperCase())
   );
+  console.log("FILTERED SHIFT DATA:  " + filteredShiftData)
 
   return filteredShiftData;
 };

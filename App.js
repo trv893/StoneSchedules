@@ -8,6 +8,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 //TODO: delete this after testing
 import fakeData from "./assets/shiftDataExample.json";
 
+const { width, height } = Dimensions.get('window')
+
 const App = () => {
   // Define state variables using the useState hook
   const [shiftData, setShiftData] = useState([]);
@@ -17,7 +19,9 @@ const App = () => {
   const [error, setError] = useState(null);
   const userId = 5;
   //const [userId, setUserId] = useState(5);
-  const { width, height } = Dimensions.get('window')
+  
+
+  
 
   // Create a memoized object of props to pass to WeeklySchedule component
   const weeklyScheduleProps = useMemo(
@@ -69,7 +73,9 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 60,
+    marginHorizontal: width * 0.05, // set margin of 5% of the device width on the left and right sides
+    marginTop: height * 0.06, // set margin of 2% of the device height at the top
+    marginBottom: height * 0.04, // set margin of 2% of the device height at the bottom
     backgroundColor: "white",
   },
   loader: {
@@ -81,5 +87,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
 
 export default App;

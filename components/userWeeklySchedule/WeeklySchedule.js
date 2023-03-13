@@ -16,10 +16,13 @@ const WeeklySchedule = React.memo(({ shiftData, startDate, userId,}) => {
     var newStartDate = weekFromStartDate(direction, startDateForWeek,)
     setStartDateForWeek(newStartDate);
     setSelectedWeekArrayOfDateObject(weekOfDateObjectsArray(newStartDate));
-    var test = filterShiftData(shiftDataExample, {
-      date: '3/12/2023',
-    } )
-    console.log("TEST:  " + test.length)
+    var item = {"dateObj": "2023-03-12T22:19:47.890Z", "dateString": "3/12/2023", "dayNumberString": "12th", "dayString": "Sun"}
+    var test = filterShiftData(shiftData, {
+      userId: 2,
+      date: "3/13/2023",
+      shiftTime: "am",
+    })
+    console.log("TEST:  " +  test)
   };
   return (
     <View style={styles.container}>
