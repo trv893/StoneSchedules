@@ -4,6 +4,7 @@ import WeeklySchedule from "./components/userWeeklySchedule/WeeklySchedule";
 import { getShiftAssignments } from "./api/getShiftAssignments";
 import ErrorScreen from "./components/ErrorScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import 'expo-dev-client';
 
 //TODO: delete this after testing
 import fakeData from "./assets/shiftDataExample.json";

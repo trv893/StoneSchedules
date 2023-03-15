@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, FlatList } from "react-native";
 import { filterShiftData } from "../../utils/filterFunctions";
+import ShiftItem from "./ShiftItem";
+import PickupRequestDropdown from "./PickupRequestDropdown";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -28,19 +30,19 @@ const styles = StyleSheet.create({
     height: lineHeight * 2,
     width: containerWidth * 0.2,
     backgroundColor: "red",
-    borderRightWidth: 1, // Use borderRightWidth instead of borderRight
+    borderRightWidth: 1,
     borderColor: "purple",
     alignItems: "center",
     justifyContent: "center",
   },
   dayString: {
-    fontSize: 20, // Set font size to 20
-    fontWeight: "bold", // Set font weight to bold
-    color: "white", // Set text color to white
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
   },
   dayNumberString: {
-    fontSize: 16, // Set font size to 16
-    color: "white", // Set text color to white
+    fontSize: 16,
+    color: "white",
   },
 
   rightComponent: {
@@ -51,7 +53,6 @@ const styles = StyleSheet.create({
     width: containerWidth * 0.8,
     flexDirection: "row",
     backgroundColor: "blue",
-    //borderBottom: 1,
     borderColor: "red",
   },
   bottomRightRow: {
@@ -68,32 +69,60 @@ const styles = StyleSheet.create({
 });
 
 const DayList = ({ weekDateData, fullSchedule }) => {
-  const renderItem = ({ item, index }) => (
-    <View style={styles.listElement}>
-      <View style={styles.leftComponent}>
-        <Text style={styles.dayString}>{item.dayString}</Text>
-        <Text style={styles.dayNumberString}>{item.dayNumberString}</Text>
-      </View>
+  const renderItem = ({ item, index }) => {
+    const filteredShiftDataAM = filterShiftData(fullSchedule, {
+      userId: 4,
+      shiftTime: "AM",
+      date: item.dateString,
+    });
+    const releasedShiftDataAm = filterShiftData(fullSchedule, {
+      userId: 4,
+      shiftTime: "AM",
+      date: item.dateString,
+      released: true,
+    });
 
-      <View style={styles.rightComponent}>
-        <View style={styles.topRightRow}>
-          <Text style={styles.listElement}>
-            Section: 
-            {
-              filterShiftData(fullSchedule, {
-                userId: 4,
-                shiftTime: "PM",
-                })[0].section
-            }
-          </Text>
+    const handleValueChange = (itemValue) => {
+      setSelectedValue(itemValue);
+      onOptionChange(itemValue);
+    };
+
+    return (
+      <View style={styles.listElement}>
+        <View style={styles.leftComponent}>
+          <Text style={styles.dayString}>{item.dayString}</Text>
+          <Text style={styles.dayNumberString}>{item.dayNumberString}</Text>
         </View>
 
-        <View style={styles.bottomRightRow}>
-          <Text>{item.dayNumberString}dfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdf</Text>
+        <View style={styles.rightComponent}>
+          <View style={styles.topRightRow}>
+            {filterShiftData(fullSchedule, {
+              userId: 14,
+              shiftTime: "AM",
+              date: item.dateString,
+            }) ? (
+              <ShiftItem shiftData={filteredShiftDataAM} />
+            ) : (
+              <View>
+                <Text>no shift</Text>
+                {/* <PickupRequestDropdown
+                onOptionChange={handleValueChange} 
+                releasedShiftsArray = {releasedShiftDataAm}
+              /> */}
+              </View>
+              
+            )}
+          </View>
+
+          <View style={styles.bottomRightRow}>
+            <Text>
+              {item.dayNumberString}dfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdf
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <View style={styles.container}>

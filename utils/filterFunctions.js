@@ -8,7 +8,8 @@
  * @param {boolean|null} params.released - The release status to filter by, or null to include all release statuses.
  * @param {string} params.shiftTime - The shift time to filter by, either "AM" or "PM".
  *
- * @returns {Array} An array of shift objects that match the provided filtering criteria.
+ * @returns {Array|null} An array of shift objects that match the provided filtering criteria,
+ * or null if the filtered array has zero length.
  *
  * @example
  *
@@ -30,16 +31,16 @@
  * ];
  *
  * // Filter shiftData by date and shift time
- * const filteredShiftData = filterShiftDataNew(shiftData, { date: "2023-03-10", shiftTime: "PM" });
+ * const filteredShiftData = filterShiftData(shiftData, { date: "2023-03-10", shiftTime: "PM" });
  * // filteredShiftData is an array containing the shift object with shiftId 2
  *
  * // Filter shiftData by userId and release status
- * const filteredShiftData2 = filterShiftDataNew(shiftData, { userId: 2, released: true });
+ * const filteredShiftData2 = filterShiftData(shiftData, { userId: 2, released: true });
  * // filteredShiftData2 is an array containing the shift object with shiftId 1 on March 14th, 2023
  */
 export const filterShiftData = (shiftData, params = {}) => {
   if (!shiftData) {
-    return [];
+    return null;
   }
 
   const { date = null, userId = null, released = null, shiftTime = null } = params;
@@ -64,7 +65,7 @@ export const filterShiftData = (shiftData, params = {}) => {
     (released === null || shift.releasedByUser === (released === true)) &&
     (!shiftTime || shift.shiftName === shiftTime.toUpperCase())
   );
-  console.log("FILTERED SHIFT DATA:  " + filteredShiftData)
+  console.log("filteredShiftData: " + filteredShiftData )
 
-  return filteredShiftData;
+  return filteredShiftData.length > 0 ? filteredShiftData : null;
 };

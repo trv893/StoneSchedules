@@ -1,5 +1,7 @@
 {
   "expo": {
+    "jsEngine": "hermes",
+    "runtimeVersion": "0.71.3",
     "name": "StoneSchedules",
     "slug": "StoneSchedules",
     "version": "1.0.0",
@@ -18,18 +20,31 @@
       "en": "./localization/en.json",
       "es": "./localization/es.json"
     },
-    "defaultLocale": "en",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "y",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.StoneSchedules",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "aefc1a75-989b-4336-8ac7-a25e7cf5762e"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/aefc1a75-989b-4336-8ac7-a25e7cf5762e"
     }
   }
 }
