@@ -2,8 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const AmDailyComponent = ({ shiftsForDay }) => {
-  const amShifts = shiftsForDay.filter((shift) => shift.shiftTime === 'am');
-
   return (
     <View style={[styles.container]}>
       <Text style={styles.shiftText}>
@@ -20,8 +18,6 @@ const AmDailyComponent = ({ shiftsForDay }) => {
 };
 
 const PmDailyComponent = ({ shiftsForDay }) => {
-  const pmShifts = shiftsForDay.filter((shift) => shift.shiftTime === 'pm');
-
   return (
     <View style={[styles.container]}>
       <Text style={styles.shiftText}>

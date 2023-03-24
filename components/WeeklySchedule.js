@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import WeekSelector from "./WeekSelector";
-import { weekOfDateObjectsArray, weekFromStartDate } from "../../utils/dateFunctions";
-import MonthYearComponent from "./MonthYearComponent";
-import DayList from "./flatListDaySchedule/DayList";
-import shiftDataExample from "../../assets/shiftDataExample.json";
+import WeekSelector from "./WeekSelector/WeekSelector";
+import { weekOfDateObjectsArray, weekFromStartDate } from "../utils/dateFunctions";
+import MonthYearComponent from "./userWeeklySchedule/MonthYearComponent";
+import DayList from "./userWeeklySchedule/flatListDaySchedule/DayList";
+import shiftDataExample from "../assets/shiftDataExample.json";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
