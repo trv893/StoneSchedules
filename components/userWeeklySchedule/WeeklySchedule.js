@@ -26,12 +26,10 @@ const WeeklySchedule = React.memo(({ shiftData, startDate, userId }) => {
         formattedArrayOfDateObjs={selectedWeekArrayOfDateObject}
         onWeekChange={onWeekChange}
       />
-      <View style={styles.dayList}>
-        <DayList
-          weekDateData={selectedWeekArrayOfDateObject}
-          fullSchedule={shiftData}
-        />
-      </View>
+      <DayList
+        weekDateData={selectedWeekArrayOfDateObject}
+        fullSchedule={shiftData}
+      />
     </View>
   );
 });
@@ -39,7 +37,7 @@ const WeeklySchedule = React.memo(({ shiftData, startDate, userId }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "98%",
+    width: "100%",
     alignSelf: "center",
   },
 });

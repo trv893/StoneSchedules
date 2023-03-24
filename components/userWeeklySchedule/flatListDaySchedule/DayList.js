@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '5%',
-    width: '90%',
+    width: '100%',
   },
   listElement: {
     flexDirection: 'row',
@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'purple',
     borderRadius: 5,
-    width: '100%',
+    flex: 1,
   },
+  
   flatListContainer: {
     alignItems: 'center',
     width: '100%',

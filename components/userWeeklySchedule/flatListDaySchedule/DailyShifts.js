@@ -18,8 +18,8 @@ const DailyShifts = ({ fullSchedule, dayString }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '95%',
-    padding: 10,
+    flexWrap: 'wrap',
+    padding: 0,
     backgroundColor: '#F5F5F5',
     borderRadius: 5,
   },

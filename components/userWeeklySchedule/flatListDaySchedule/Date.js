@@ -4,11 +4,8 @@ import { StyleSheet, Text, View } from "react-native";
 const styles = StyleSheet.create({
   dateComponent: {
     flexDirection: "row",
-    height: "40%",
-    width: "20%",
+    flex: 1,
     backgroundColor: "red",
-    borderRightWidth: 1,
-    borderColor: "purple",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -18,7 +15,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   dayNumberString: {
-    fontSize: 16,
+    fontSize: 20,
     color: "white",
   },
 });
