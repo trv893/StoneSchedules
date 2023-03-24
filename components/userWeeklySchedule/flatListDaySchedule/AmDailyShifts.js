@@ -21,7 +21,7 @@ const AmDailyComponent = ({ fullSchedule, dayString }) => {
     return (
         <View style={styles.amRow}>
             <Text style={styles.text}>
-                Section:
+                Section:dddddddd
                 {/* {
                     filterShiftData(fullSchedule, {
                         userId: 4,

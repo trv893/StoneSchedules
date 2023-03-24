@@ -1,29 +1,28 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { filterShiftData } from "../../../utils/filterFunctions";
-import AmDailyComponent from "./AmDailyShifts";
-import PmDailyComponent from "./PmDailyShifts";
-
-const styles = StyleSheet.create({
-  dailyShiftComponent: {
-    flexDirection: "row",
-    width: "80%",
-  },
-});
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { AmDailyComponent, PmDailyComponent } from './DailyComponent';
 
 const DailyShifts = ({ fullSchedule, dayString }) => {
+  const shiftsForDay = fullSchedule.filter(
+    (shift) => shift.date === dayString
+  );
+
   return (
-    <View style={styles.dailyShiftComponent}>
-      <AmDailyComponent
-        fullSchedule={fullSchedule}
-        dayString={dayString}
-      />
-      <PmDailyComponent
-        fullSchedule={fullSchedule}
-        dayString={dayString}
-      />
+    <View style={styles.container}>
+      <AmDailyComponent shiftsForDay={shiftsForDay} />
+      <PmDailyComponent shiftsForDay={shiftsForDay} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '95%',
+    padding: 10,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 5,
+  },
+});
 
 export default DailyShifts;

@@ -21,7 +21,7 @@ const PmDailyComponent = ({ fullSchedule, dayString }) => {
     return (
         <View style={styles.pmRow}>
             <Text style={styles.text}>
-                Section:
+                Section:ggggggggggggggg
                 {/* {
                     filterShiftData(fullSchedule, {
                         userId: 4,
