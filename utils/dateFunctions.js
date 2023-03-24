@@ -43,6 +43,7 @@ export const weekOfDateObjectsArray = (startDate) => {
     const monthString = date.getMonth() + 1; // add 1 since getMonth returns zero-based month
     const yearString = date.getFullYear();
     const dateString = `${monthString}/${dayNumberString.slice(0, -2)}/${yearString}`;
+    console.log("dateString: " + dateString)
     formattedDates.push({ dayString, dayNumberString, dateString, dateObj: date });
   }
   console.log("formatDayOfWeekDate", formattedDates);
